@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../db/index')
+var postsHelpers = require('../utils/posts')
 
 router.get('/', async function (req, res, next) {
   const result = await db.getPrompts()
-
   const response = result.map(post => {
     return {
       id: post.id,
@@ -24,8 +24,9 @@ router.get('/', async function (req, res, next) {
 
 router.get('/:promptId', async function (req, res, next) {
   const result = await db.getReplies(req.params.promptId)
+  const posts = postsHelpers.orderPosts(result, req.params.promptId)
 
-  const response = result.map(post => {
+  const response = posts.map(post => {
     return {
       id: post.id,
       level: post.level,

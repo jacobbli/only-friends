@@ -1,20 +1,19 @@
 CREATE TABLE IF NOT EXISTS posts (
     id SERIAL PRIMARY KEY,
-    level INTEGER NOT NULL,
     prompt_id INTEGER,
     parent_id INTEGER,
-    thread_id SERIAL,
+    level INTEGER NOT NULL,
     title TEXT,
     author TEXT,
     content TEXT,
     create_timestamp BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS posts_in_thread (
+CREATE TABLE IF NOT EXISTS images (
     id SERIAL PRIMARY KEY,
     prompt_id INTEGER,
     thread_id INTEGER,
-    post_id INTEGER REFERENCES posts(id)
+    create_timestamp BIGINT
 )
 
 INSERT INTO posts (level, prompt_id, parent_id, title, author, content, create_timestamp)

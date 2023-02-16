@@ -1,6 +1,13 @@
 <template>
   <div class="forum__container">
-    <div class="forum__container">
+    <div class="forum__header">
+      <table>
+        <tr>
+          <td>Title</td>
+        </tr>
+      </table>
+    </div>
+    <div class="forum__content">
       <post class="forum__prompt" v-for="prompt in prompts" :key="prompt.id" :post="prompt"
         @click="() => goToPrompt(prompt.id)" />
     </div>
@@ -39,7 +46,24 @@ function goToPrompt(promptId) {
 
 
 <style lang="scss">
-.forum__prompt {
-  cursor: pointer;
+.forum__container {
+  display: flex;
+  flex-direction: column;
+  // gap: 12px;
+
+  .forum__content {
+    display: table;
+    border-collapse: collapse;
+  }
+
+  .forum__prompt {
+    cursor: pointer;
+
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: rgb(210, 240, 238);
+    }
+  }
 }
 </style>

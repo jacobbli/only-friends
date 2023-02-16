@@ -1,27 +1,12 @@
 <template>
-  <div class="navbar">
-    <router-link to="/">Home</router-link>
-    <div class="newPost__button" @click="openNewPostForm">Create new post</div>
+  <nav-bar />
 
-    <new-prompt-modal v-if="isNewPostFormOpen" :close-new-post-form="closeNewPostForm" />
-
-  </div>
-  <router-view />
+  <router-view class="app__content" />
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import NewPromptModal from './components/NewPromptModal.vue';
+import NavBar from './components/NavBar.vue';
 
-const isNewPostFormOpen = ref(false)
-
-function openNewPostForm() {
-  isNewPostFormOpen.value = true
-}
-
-function closeNewPostForm() {
-  isNewPostFormOpen.value = false
-}
 </script>
 <style lang="scss">
 body {
@@ -34,27 +19,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 30px;
-
-  border-bottom: 1px solid gray;
-
-  .newPost__button {
-    border: 1px solid gray;
-    padding: 8px;
-
-    font-weight: bold;
-    color: #2c3e50;
-    cursor: pointer;
-
-    &:hover {
-      color: #42b983;
-    }
-  }
+.app__content {
+  padding: 0 100px;
 }
 </style>

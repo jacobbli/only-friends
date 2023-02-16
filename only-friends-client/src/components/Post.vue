@@ -1,18 +1,19 @@
 <template>
   <div class="post__container">
-    <div class="post__header">
-      <div class="post__title" v-if="post.level == 0">{{ post.title }}</div>
-      <div>{{ post.author }}</div>
-      <div class="post__replyButton" v-if="showDetails" @click="openNewPostModal">Reply to post</div>
-
+    <div class="post_content">
+      <div class="post__header">
+        <div class="post__title" v-if="post.level == 0">{{ post.title }}</div>
+        <div>{{ post.author }}</div>
+        <base-button v-if="showDetails" :onClick="openNewPostModal">Reply to post</base-button>
+      </div>
+      <div class="post__body" v-if="showDetails">
+        <div v-html="post.content"></div>
+      </div>
     </div>
-    <div class="post__content" v-if="showDetails">
-      <p>{{ post.content }}</p>
+    <div class="post__reply">
+      <new-post-modal v-if="isNewPostModalOpen" :close-new-post-Modal="closeNewPostModal" :promptId="post.promptId"
+        :parentId="post.id" :level="post.level + 1" />
     </div>
-
-    <new-post-modal v-if="isNewPostModalOpen" :close-new-post-Modal="closeNewPostModal" :promptId="post.promptId"
-      :parentId="post.id" :level="post.level + 1" />
-
   </div>
 </template>
 
@@ -20,13 +21,14 @@
 import { ref, defineProps } from 'vue';
 
 import NewPostModal from '../components/NewPostModal.vue';
+import BaseButton from './BaseButton.vue';
 
 const props = defineProps({
   post: {
     id: null,
-    level: null,
     promptId: null,
     parentId: null,
+    level: null,
     title: null,
     author: null,
     content: null,
@@ -52,30 +54,44 @@ function closeNewPostModal() {
 
 <style scoped lang="scss">
 .post__container {
-  border: 1px gray solid;
-  margin: 8px;
-  padding: 8px;
-  padding-left: v-bind('postIndent');
+  padding: 12px;
 
+  border-top: 1px gray solid;
+  border-bottom: 1px gray solid;
+
+
+}
+
+.post_content {
   display: flex;
   flex-direction: column;
+  padding-left: v-bind('postIndent');
+
   text-align: left;
+
 
   .post__header {
     display: flex;
     justify-content: space-between;
 
-
     .post__title {
       font-size: 18px;
       font-weight: bold;
-    }
 
-    .post__replyButton {
-      cursor: pointer;
+      &:empty {
+        display: none;
+      }
     }
 
   }
 
+}
+
+.post__reply {
+  height: 400px;
+
+  &:empty {
+    display: none;
+  }
 }
 </style>

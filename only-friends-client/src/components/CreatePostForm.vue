@@ -1,17 +1,21 @@
 <template>
-  <form class="inputForm__container">
+  <form class="createPostForm__container">
     <input id="author" v-model="author" placeholder="Username" />
     <input v-if="isCreatingPrompt" id="title" v-model="title" placeholder="Subject" />
-    <textarea id="content" v-model="content" placeholder="Content" />
-    <div class="inputForm__buttons">
-      <div @click="submit">Create post</div>
-      <div @click="cancel">Cancel</div>
+    <rich-text-editor class="createPostForm__richTextEditor" :onUpdate="updateContent" />
+    <div class="createPostForm__buttons">
+      <base-button :onClick="submit">Create post</base-button>
+      <base-button :onClick="cancel">Cancel</base-button>
     </div>
   </form>
+
 </template>
 
 <script setup>
 import { ref, defineProps } from 'vue'
+
+import RichTextEditor from './RichTextEditor.vue'
+import BaseButton from './BaseButton.vue';
 
 import { addPost } from '../api/posts.js'
 
@@ -57,28 +61,28 @@ function submit() {
 function cancel() {
   props.onCancel()
 }
+
+function updateContent(newContent) {
+  content.value = newContent
+}
+
 </script>
 
 <style scoped lang="scss">
-.inputForm__container {
+.createPostForm__container {
   display: flex;
-  gap: 20px;
   flex-direction: column;
 
-  textarea {
-    width: 100%
+  gap: 12px;
+  height: 80%;
+
+  .createPostForm__richTextEditor {
+    height: 80%;
   }
 
-  .inputForm__buttons {
+  .createPostForm__buttons {
     display: flex;
     gap: 10px;
-
-    div {
-      cursor: pointer;
-      border: 1px solid gray;
-      width: 120px;
-    }
-
   }
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div class="newPostForm__container">
-    <div class="newPostForm__content">
+  <div class="newPromptModal__container">
+    <div class="newPromptModal__content">
       <h1>Create Post</h1>
 
-      <create-post-form :onSubmit="createPost" :onCancel="closeNewPostForm" isCreatingPrompt />
+      <create-post-form :onSubmit="createPost" :onCancel="closeNewPromptModal" isCreatingPrompt />
     </div>
   </div>
 </template>
@@ -14,18 +14,18 @@ import CreatePostForm from '../components/CreatePostForm.vue';
 import { broadcast } from '../socket';
 
 const props = defineProps({
-  closeNewPostForm: Function
+  closeNewPromptModal: Function
 })
 
 function createPost() {
   broadcast('refresh prompts')
-  props.closeNewPostForm()
+  props.closeNewPromptModal()
 }
 
 </script>
 
 <style lang="scss">
-.newPostForm__container {
+.newPromptModal__container {
   position: fixed;
   left: 0;
   top: 0;
@@ -38,12 +38,12 @@ function createPost() {
   width: 100vw;
   height: 100vh;
 
-  .newPostForm__content {
+  .newPromptModal__content {
     background-color: white;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
+    border-radius: 12px;
 
+    min-width: 60vw;
+    height: 80%;
     padding: 50px;
   }
 }

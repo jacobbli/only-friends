@@ -19,5 +19,5 @@ export async function addPost(searchParams) {
   const api_url = `${process.env.VUE_APP_API_HOST}:${process.env.VUE_APP_API_PORT}/posts?${params}`
   const res = await fetch(api_url, { method: 'POST' })
 
-  console.log(res)
+  return res
 }

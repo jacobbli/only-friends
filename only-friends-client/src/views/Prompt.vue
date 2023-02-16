@@ -1,5 +1,5 @@
 <template>
-  <div class="prompt">
+  <div class="prompt__container">
     <post v-if="prompt.id" :post="prompt" showDetails />
     <post v-for="post in replies" :key="post.id" :post="post" showDetails />
   </div>
@@ -41,7 +41,6 @@ onMounted(async () => {
   const posts = await getPosts(route.params.id)
   prompt.value = posts.length > 0 ? posts[0] : []
   replies.value = posts.length > 1 ? posts.slice(1) : []
-  console.log(replies.value)
 })
 
 
@@ -50,19 +49,9 @@ onMounted(async () => {
 
 <style lang="scss">
 .prompt__container {
-  border: 1px gray solid;
-  margin: 8px;
-  padding: 8px;
-
   display: flex;
-  justify-content: space-between;
-  // display: flex;
-  // gap: 100px;
-
-  .prompt__title {
-    font-size: 18px;
-    margin: 0;
-  }
+  flex-direction: column;
+  gap: 24px;
 
 }
 </style>
